@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+<!-- Title -->
+{% block title %}RobinNest Stock Comparison App{% endblock %}
+
+<!-- Pretty much what'll be in the page -->
+{% block content %}
+<!-- Title Header -->
+<div>
+	<br><br>
+	<h1 class="dsiplay-1"><i class="tim-icons icon-money-coins text-primary"></i> RobinNest - Stock Comparison App</h1>
+	A Flask Web App by <a href='https://dariusbrown.dev' target="_blank">Darius Brown</a>
+	<hr>
+</div>
+
+<!-- Card 1: Find Penny Stocks -->
+<div class="row" data-aos="fade-up" data-aos-duration="1000">
+<div class="col-12">
+	<div class="card card-chart">
+	<div class="card-header">
+		<div class="row">
+			
+		<!-- Heading Text -->
+		<div class="col-12 text-left">
+			<h5 class="card-category">Stock Search</h5>
+			<h2 class="card-title">Discover Penny Stocks</h2>
+			<hr>
+		</div>
+
+		<!-- Set the threshold for the Penny Stocks -->
+		<div class="col-12 text-left">
+			<p class="card-text col-sm-6 text-left">
+				<i>Penny stocks</i> are considered stocks between $.0001 and $5.00. This app service lets you choose stocks up to $25. Enter a ceiling amount for the stock prices and choose a stock to view.
+			</p>
+			<br>
+			<form class="card-text col-sm-6 text-left" action="{{ url_for("get_penny_stocks")}}" method="post">
+				<div class="input-group input-group-lg">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-lg">Stock Price &nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span class="input-group-text">$</span>
+					</div>
+					<input type="text" class="form-control card-text col-sm-6" aria-label="Large" id="price_input" name="price_input" aria-describedby="inputGroup-sizing-sm" autocomplete="off">
+				</div>
+				<br>
+				<button type="submit" class="btn btn-primary mb-2" >View Stocks</button>
+			</form>
+			<br><br>
+
+			<!-- Table of Search Results -->
+			<div class="container">
+				{% if stock_list %}
+				<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Symbol</th>
+						<th scope="col">Name</th>
+						<th scope="col">Price (USD)</th>
+						<th scope="col">Dashboard</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% endif %}
+				{% for item in stock_list %}
+				<tr>
+					<th scope="row">{{item[0]['symbol']}}</th>
+					<td><b>{{item[0]['simple_name']}}</b> &nbsp; <small>{{item[0]['name']}}</small></td>
+					<td>${{item[1][0]}}</td>
+					<td><a href="/{{item[0]['symbol']}}">View {{item[0]['symbol']}}</a></td>
+				</tr>
+				{% endfor %}
+				{% if stock_list %}
+				</tbody>
+				</table>
+				<br><br>
+				{% endif %}
+			</div>
+
+		</div>
+		</div>
+	</div>
+	</div>
+</div>
+</div>
+
+{% endblock %}

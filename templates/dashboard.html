@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+<!-- Title -->
+{% block title %}Dashboard | RobinNest Stock Comparisons{% endblock %}
+
+<!-- Pretty much what'll be in the page -->
+{% block content %}
+<div>
+
+	<!-- Card 1: Performance -->
+	<div class="row" data-aos="fade-up" data-aos-duration="1000">
+	<div class="col-12">
+		<div class="card card-chart">
+		<div class="card-header ">
+			<div class="row">
+				
+				<!-- Heading Text -->
+			<div class="col-sm-6 text-left">
+				<h5 class="card-category">Price History</h5>
+				<h1 class="card-title">{{ gen['name'] }} <small class="text-info">{{ gen['symbol'] }}</small></h2>
+				<h1 class="card-title">${{ price['last_trade_price']}}</h2>
+				<h5>+$2.00 today &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +$0.43 this week</h5>
+
+			</div>
+
+			<!-- Button Groups -->
+			<div class="col-sm-6">
+				<div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+				<label class="btn btn-sm btn-primary btn-simple active" id="0">
+					<input type="radio" name="options" checked>
+					<span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">1 Day</span>
+					<span class="d-block d-sm-none">
+					<i class="tim-icons icon-single-02"></i>
+					</span>
+				</label>
+				<label class="btn btn-sm btn-primary btn-simple" id="1">
+					<input type="radio" class="d-none d-sm-none" name="options">
+					<span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">1 Month</span>
+					<span class="d-block d-sm-none">
+					<i class="tim-icons icon-gift-2"></i>
+					</span>
+				</label>
+				<label class="btn btn-sm btn-primary btn-simple" id="2">
+					<input type="radio" class="d-none" name="options">
+					<span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">1 Year</span>
+					<span class="d-block d-sm-none">
+					<i class="tim-icons icon-tap-02"></i>
+					</span>
+				</label>
+				</div>
+			</div>
+
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="chart-area">
+			<canvas id="chartBig1"></canvas>
+			</div>
+		</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="row">
+		<!-- Card 2 -->
+		<div class="col-lg-4" data-aos="fade-up" data-aos-duration="1000">
+			<div class="card card-chart">
+			<div class="card-header">
+				<h5 class="card-category">Total Shipments</h5>
+				<h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> 763,215</h3>
+			</div>
+			<div class="card-body">
+				<div class="chart-area">
+				<canvas id="chartLinePurple"></canvas>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		<!-- Card 3: Daily Sales -->
+		<div class="col-lg-4" data-aos="fade-up" data-aos-duration="1000">
+			<div class="card card-chart">
+			<div class="card-header">
+				<h5 class="card-category">Daily Sales</h5>
+				<h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500€</h3>
+			</div>
+			<div class="card-body">
+				<div class="chart-area">
+				<canvas id="CountryChart"></canvas>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		<!-- Card 4: Completed Tasks -->
+		<div class="col-lg-4" data-aos="fade-up" data-aos-duration="1000">
+			<div class="card card-chart">
+			<div class="card-header">
+				<h5 class="card-category">Completed Tasks</h5>
+				<h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100K</h3>
+			</div>
+			<div class="card-body">
+				<div class="chart-area">
+				<canvas id="chartLineGreen"></canvas>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<!-- Card 5: News -->
+		<div class="col-lg-6 col-md-12">
+			<div class="card card-tasks">
+			<div class="card-header ">
+				<h4 class="title d-inline">News</h4>
+			</div>
+			<div class="card-body ">
+				<div class="table-full-width table-responsive">
+				<table class="table">
+					<tbody>
+					{% if not news %}
+					<td class="text-muted"><br>No news related to this company.</td>
+					{% endif %}
+					{% for item in news %}
+					<tr>
+						<td></td>
+
+						<td>
+						<a href="{{ item['url'] }}">						
+							<p class="title">{{ item['title'] }}</p>
+						</a>
+						<p class="text-muted">{{ item['preview_text'] }}</p>
+						<p class="text-muted"><a href="{{ item['url'] }}">Source: {{ item['source'] }}</a></p>
+						</td>
+						
+						<td class="td-actions text-right"></td>
+					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		<!-- Card 6: Additional Info -->
+		<div class="col-lg-6 col-md-12">
+			<div class="card ">
+				<div class="card-header">
+					<h4 class="card-title">Additional Information</h4>
+				</div>
+				<div class="card-body">
+					{% for item in info %}
+					<p>{{ item }}: {{ info[item] }}</p>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+      
+</div>
+{% endblock %}
